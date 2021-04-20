@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="scull" />
+		<Option makefile_is_custom="1" />
+		<Option execution_dir="../../scull" />
+		<Option pch_mode="2" />
+		<Option compiler="null" />
+		<MakeCommands>
+			<Build command="make" />
+			<CompileFile command="make" />
+			<Clean command="$make -f $makefile clean$target" />
+			<DistClean command="$make -f $makefile distclean$target" />
+			<AskRebuildNeeded command="$make -q -f $makefile $target" />
+			<SilentBuild command="make &gt; $(CMD_NULL)" />
+		</MakeCommands>
+		<Build>
+			<Target title="Release">
+				<Option type="4" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="none" />
+				</Compiler>
+				<MakeCommands>
+					<Build command="make" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean$target" />
+					<DistClean command="$make -f $makefile distclean$target" />
+					<AskRebuildNeeded command="$make -q -f $makefile $target" />
+					<SilentBuild command="make &gt; $(CMD_NULL)" />
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="scull.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="scull.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
