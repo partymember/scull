@@ -2,21 +2,57 @@
 #include <linux/module.h>
 #include <linux/types.h>
 #include <linux/fs.h>
+#include <linux/cdev.h>
 #include "scull.h"
 
 
 dev_t first_dev;
+
 int scull_major;
 int scull_minor = 0;
+/*
+struct scull_dev {
+    struct scull_qset *data;
+    int quantum;
+    int qset;
+    unsigned long size;
+    unsigned int access_key;
+    struct semaphore sem;
+    struct cdev cdev;
+}
+*/
+struct cdev cdev;
 
 
 
 
-MODULE_LICENSE("GPL");
+static int  scull_open(struct inode* i, struct file* f){
+    printk("scull_open()");
+    return 0;
+}
+static ssize_t  scull_read(struct file *f, char __user *buf, size_t len, loff_t *off){
+    printk("scull_read()");
+    return 0;
+}
+static ssize_t  scull_write(struct file *f, const char __user *buf, size_t len, loff_t *off){
+    printk("scull_write()");
+    return 0;
+}
+static int scull_release(struct inode* i, struct file* f){
+    printk("scull_release()");
+    return 0;
+}
 
 
-
-
+struct file_operations scull_fops = {
+.owner =    THIS_MODULE,
+//.llseek =   scull_llseek,
+.read =     scull_read,
+.write =    scull_write,
+//.ioctl =    scull_ioctl,
+.open =     scull_open,
+.release =  scull_release,
+};
 
 static int __init scull_init(void)
 {
@@ -31,25 +67,32 @@ static int __init scull_init(void)
 
 
     printk(KERN_ALERT "Open scull MAJOR: %d", scull_major);
+    cdev_init(&cdev, &scull_fops);
+
+    r = cdev_add(&cdev,first_dev,1);
+    if(r){
+        printk(KERN_ALERT "Error %d adding scull device",r);
+        unregister_chrdev_region(first_dev, DEV_COUNT);
+        return r;
+    }
+    printk("Done");
+
+
     return 0;
 }
 static void __exit scull_exit(void){
 printk("Releasing scull...");
+cdev_del(&cdev);
 unregister_chrdev_region(first_dev, DEV_COUNT);
 
 printk(KERN_ALERT "Close scull");
 }
-/*
 
-struct file_operatrions scull_fops ={
-.owner =    THIS_MODULE,
-.llseek =   scull_llseek,
-.read =     scull_read,
-.write =    scull_write,
-.ioctl =    scull_ioctl,
-.open =     scull_open,
-.release =  scull_release,
-}*/
+
+
 
 module_init(scull_init);
 module_exit(scull_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Adam Mikolajczak");
