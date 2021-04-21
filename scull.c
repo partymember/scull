@@ -9,7 +9,7 @@
 dev_t first_dev;
 
 int scull_major;
-int scull_minor = 0;
+int scull_minor = 0; 
 /*
 struct scull_dev {
     struct scull_qset *data;
@@ -27,19 +27,19 @@ struct cdev cdev;
 
 
 static int  scull_open(struct inode* i, struct file* f){
-    printk("scull_open()");
+    printk(KERN_ALERT "scull_open()");
     return 0;
 }
 static ssize_t  scull_read(struct file *f, char __user *buf, size_t len, loff_t *off){
-    printk("scull_read()");
+    printk(KERN_ALERT "scull_read()");
     return 0;
 }
 static ssize_t  scull_write(struct file *f, const char __user *buf, size_t len, loff_t *off){
-    printk("scull_write()");
+    printk(KERN_ALERT "scull_write()");
     return 0;
 }
 static int scull_release(struct inode* i, struct file* f){
-    printk("scull_release()");
+    printk(KERN_ALERT "scull_release()");
     return 0;
 }
 
@@ -81,7 +81,7 @@ static int __init scull_init(void)
     return 0;
 }
 static void __exit scull_exit(void){
-printk("Releasing scull...");
+printk(KERN_ALERT"Releasing scull...");
 cdev_del(&cdev);
 unregister_chrdev_region(first_dev, DEV_COUNT);
 
