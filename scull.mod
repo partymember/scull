@@ -1,2 +1,2 @@
-/home/partymember/prg/linux_drivers/scull/scull.o
+/home/adammi/adam/prg/scull/scull.o
 
