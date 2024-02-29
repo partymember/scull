@@ -3,15 +3,15 @@
 
 MODULE_LICENSE("Dual BSD/GPL");
 
-static int init(void){
-    printk("Hello");
+static int __init init(void){
+    printk(KERN_ALERT "init\n");
     return 0;
 }
 
-static void exit(void){
-    printk("exit");
+static void __exit cleanup(void){
+    printk(KERN_ALERT "exit\n");
 }
 
 
 module_init(init);
-module_exit(exit);
+module_exit(cleanup);
